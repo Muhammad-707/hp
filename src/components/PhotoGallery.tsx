@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import type { GalleryImage } from '../types';
+import { cn } from "@/lib/utils"; // <-- Исправлено: импорт утилиты cn
 import {
   Carousel,
   CarouselContent,
@@ -8,21 +9,19 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from './ui/Carousel';
-import Autoplay from 'embla-carousel-autoplay'; // <-- Добавлен импорт для автопрокрутки
-import { cn } from "@/lib/utils";
+import Autoplay from 'embla-carousel-autoplay';
 
-import i1 from "@/assets/1.jpg"
-import i2 from "@/assets/2.jpg"
-import i3 from "@/assets/3.jpg"
-import i4 from "@/assets/4.jpg"
-import i5 from "@/assets/5.jpg"
-import i6 from "@/assets/6.jpg"
-import i7 from "@/assets/7.jpg"
+import i1 from "@/assets/1.jpg";
+import i2 from "@/assets/2.jpg";
+import i3 from "@/assets/3.jpg";
+import i4 from "@/assets/4.jpg";
+import i5 from "@/assets/5.jpg";
+import i6 from "@/assets/6.jpg";
+import i7 from "@/assets/7.jpg";
 
 export function PhotoGallery() {
   const { t } = useLanguage();
 
-  // Твои картинки теперь здесь
   const photos: GalleryImage[] = [
     { id: '1', src: i1, alt: 'Beautiful roses' },
     { id: '2', src: i2, alt: 'Family celebration' },
@@ -61,10 +60,9 @@ export function PhotoGallery() {
               align: "start",
               loop: true,
             }}
-            // Добавлен плагин автопрокрутки
             plugins={[
               Autoplay({
-                delay: 3000, // Время задержки (3 секунды)
+                delay: 3000,
               }),
             ]}
             className={cn('relative', 'mx-auto', 'w-full', 'max-w-4xl')}
@@ -94,7 +92,6 @@ export function PhotoGallery() {
               ))}
             </CarouselContent>
             
-            {/* Custom styled navigation buttons */}
             <div className={cn('hidden', 'md:block')}>
               <CarouselPrevious className={cn('-left-16', 'bg-white/80', 'hover:bg-rose-500', 'dark:bg-black/80', 'shadow-lg', 'border-none', 'w-12', 'h-12', 'text-rose-500', 'hover:text-white')} />
               <CarouselNext className={cn('-right-16', 'bg-white/80', 'hover:bg-rose-500', 'dark:bg-black/80', 'shadow-lg', 'border-none', 'w-12', 'h-12', 'text-rose-500', 'hover:text-white')} />
