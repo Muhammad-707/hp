@@ -7,7 +7,7 @@ import { LanguageProvider } from './context/LanguageContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <LanguageProvider>
         <App />
       </LanguageProvider>
