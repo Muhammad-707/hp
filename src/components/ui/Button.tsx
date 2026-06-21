@@ -9,15 +9,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-rose-500 text-white shadow hover:bg-rose-600 dark:bg-rose-600 dark:hover:bg-rose-700',
+          'bg-rose-600 text-white shadow hover:bg-rose-700',
         destructive:
           'bg-red-500 text-white shadow-sm hover:bg-red-600',
         outline:
-          'border border-rose-200 bg-transparent shadow-sm hover:bg-rose-100 hover:text-rose-900 dark:border-rose-800 dark:hover:bg-rose-900 dark:hover:text-rose-100',
+          'border border-rose-800 bg-transparent shadow-sm hover:bg-rose-900 hover:text-rose-100',
         secondary:
-          'bg-rose-100 text-rose-900 shadow-sm hover:bg-rose-200 dark:bg-rose-900 dark:text-rose-100 dark:hover:bg-rose-800',
-        ghost: 'hover:bg-rose-100 hover:text-rose-900 dark:hover:bg-rose-900 dark:hover:text-rose-100',
-        link: 'text-rose-500 underline-offset-4 hover:underline dark:text-rose-400',
+          'bg-rose-900 text-rose-100 shadow-sm hover:bg-rose-800',
+        ghost: 'hover:bg-rose-900 hover:text-rose-100',
+        link: 'text-rose-400 underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-9 px-4 py-2',

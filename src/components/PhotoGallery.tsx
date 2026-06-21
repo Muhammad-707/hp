@@ -33,18 +33,18 @@ export function PhotoGallery() {
   ];
 
   return (
-    <section className={cn('bg-rose-50/50', 'dark:bg-black/30', 'py-24', 'border-rose-100', 'border-y', 'dark:border-rose-900', 'overflow-hidden')}>
+    <section className={cn('bg-black/30', 'py-24', 'border-y', 'border-rose-900', 'overflow-hidden')}>
       <div className={cn('mx-auto', 'px-4', 'max-w-5xl')}>
         <div className={cn('mb-12', 'text-center')}>
           <motion.h3 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className={cn('mb-4', 'font-serif', 'text-rose-900', 'dark:text-rose-100', 'text-4xl')}
+            className={cn('mb-4', 'font-serif', 'text-rose-100', 'text-4xl')}
           >
             {t.gallery.title}
           </motion.h3>
-          <p className={cn('text-rose-600', 'dark:text-rose-400')}>
+          <p className={cn('text-rose-400')}>
             {t.gallery.subtitle}
           </p>
         </div>
@@ -71,7 +71,7 @@ export function PhotoGallery() {
               {photos.map((photo) => (
                 <CarouselItem key={photo.id} className={cn('pl-2', 'md:pl-4', 'md:basis-1/2', 'lg:basis-1/3')}>
                   <div className="p-1">
-                    <div className={cn('group', 'relative', 'bg-rose-100', 'dark:bg-rose-950', 'shadow-xl', 'border-4', 'border-white', 'dark:border-rose-900', 'rounded-2xl', 'aspect-[4/5]', 'overflow-hidden')}>
+                    <div className={cn('group', 'relative', 'bg-rose-950', 'shadow-xl', 'border-4', 'border-rose-900', 'rounded-2xl', 'aspect-[4/5]', 'overflow-hidden')}>
                       {/* Decorative floral corner */}
                       <div className={cn('top-2', 'left-2', 'z-10', 'absolute', 'opacity-50', 'w-8', 'h-8', 'pointer-events-none')}>
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-rose-500">
@@ -93,8 +93,8 @@ export function PhotoGallery() {
             </CarouselContent>
             
             <div className={cn('hidden', 'md:block')}>
-              <CarouselPrevious className={cn('-left-16', 'bg-white/80', 'hover:bg-rose-500', 'dark:bg-black/80', 'shadow-lg', 'border-none', 'w-12', 'h-12', 'text-rose-500', 'hover:text-white')} />
-              <CarouselNext className={cn('-right-16', 'bg-white/80', 'hover:bg-rose-500', 'dark:bg-black/80', 'shadow-lg', 'border-none', 'w-12', 'h-12', 'text-rose-500', 'hover:text-white')} />
+              <CarouselPrevious className={cn('-left-16', 'bg-black/80', 'hover:bg-rose-500', 'shadow-lg', 'border-none', 'w-12', 'h-12', 'text-rose-500', 'hover:text-white')} />
+              <CarouselNext className={cn('-right-16', 'bg-black/80', 'hover:bg-rose-500', 'shadow-lg', 'border-none', 'w-12', 'h-12', 'text-rose-500', 'hover:text-white')} />
             </div>
           </Carousel>
         </motion.div>

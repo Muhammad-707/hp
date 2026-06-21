@@ -46,24 +46,24 @@
 
 @layer base {
   :root {
-    --bg-color: #FFF0F5;
-    --fg-color: #3D0C26;
+    --bg-color: #1A0510;
+    --fg-color: #FFE4ED;
     
     --primary-color: #FF2D78;
     --primary-fg-color: #ffffff;
     
-    --secondary-color: #E0115F;
+    --secondary-color: #C70039;
     --secondary-fg-color: #ffffff;
     
-    --accent-color: #FFC9DA;
-    --accent-fg-color: #66001D;
+    --accent-color: #66001D;
+    --accent-fg-color: #FFC9DA;
     
-    --card-color: #ffffff;
-    --card-fg-color: #3D0C26;
+    --card-color: #2B0A1F;
+    --card-fg-color: #FFE4ED;
     
     --radius: 1rem;
     
-    --gradient-light: linear-gradient(135deg, #FFF0F5 0%, #FFE4ED 100%);
+    --gradient-dark: linear-gradient(135deg, #1A0510 0%, #2B0A1F 50%, #3D0C26 100%);
   }
   
   .dark {
@@ -88,15 +88,11 @@
 
 @layer base {
   * {
-    @apply border-rose-200 dark:border-rose-800;
+    @apply border-rose-800;
   }
   body {
     @apply bg-background text-foreground;
-    background: var(--gradient-light);
-    min-height: 100vh;
-  }
-  
-  .dark body {
     background: var(--gradient-dark);
+    min-height: 100vh;
   }
 }

@@ -64,7 +64,7 @@ export function CelebrateButton() {
         <Button
           onClick={handleCelebrate}
           size="lg"
-          className="relative z-10 h-24 px-12 text-2xl md:text-3xl font-black rounded-full bg-gradient-to-r from-rose-500 via-rose-600 to-red-500 hover:from-rose-600 hover:via-rose-700 hover:to-red-600 text-white shadow-[0_10px_40px_rgba(255,45,120,0.5)] hover:shadow-[0_10px_60px_rgba(255,45,120,0.8)] border-4 border-rose-300 dark:border-rose-900 transition-all overflow-hidden group"
+          className="relative z-10 h-24 px-12 text-2xl md:text-3xl font-black rounded-full bg-gradient-to-r from-rose-500 via-rose-600 to-red-500 hover:from-rose-600 hover:via-rose-700 hover:to-red-600 text-white shadow-[0_10px_40px_rgba(255,45,120,0.5)] hover:shadow-[0_10px_60px_rgba(255,45,120,0.8)] border-4 border-rose-900 transition-all overflow-hidden group"
         >
           {/* Shimmer effect */}
           <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12" />

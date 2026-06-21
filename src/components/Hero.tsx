@@ -22,7 +22,7 @@ export function AgeCounter() {
   }, []);
 
   return (
-    <span className="inline-block tabular-nums text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-rose-700 dark:from-rose-400 dark:to-rose-600 drop-shadow-sm font-black">
+    <span className="inline-block tabular-nums text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-600 drop-shadow-sm font-black">
       {count}
     </span>
   );
@@ -46,8 +46,8 @@ export function Hero() {
       
       {/* Background glowing effects */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-400/20 dark:bg-rose-500/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-rose-600/20 dark:bg-rose-800/20 rounded-full blur-[100px]" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-500/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-rose-800/20 rounded-full blur-[100px]" />
       </div>
 
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
@@ -59,8 +59,8 @@ export function Hero() {
           className="mb-8 relative"
         >
           <div className="absolute inset-0 bg-rose-500 blur-2xl opacity-20 rounded-full" />
-          <div className="relative bg-white/40 dark:bg-black/40 backdrop-blur-md border border-rose-200 dark:border-rose-900 rounded-3xl px-8 py-4 shadow-xl">
-            <h2 className="text-4xl md:text-6xl font-black text-rose-950 dark:text-rose-100 tracking-tight">
+          <div className="relative bg-black/40 backdrop-blur-md border border-rose-900 rounded-3xl px-8 py-4 shadow-xl">
+            <h2 className="text-4xl md:text-6xl font-black text-rose-100 tracking-tight">
               <AgeCounter />
             </h2>
           </div>
@@ -70,7 +70,7 @@ export function Hero() {
           custom={1}
           initial={{ opacity: 0, y: 50 }}
           animate={controls}
-          className="text-5xl md:text-7xl lg:text-8xl font-black text-rose-900 dark:text-white leading-tight mb-6 drop-shadow-lg"
+          className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-6 drop-shadow-lg"
           style={{ textShadow: "0 4px 20px rgba(255,45,120,0.3)" }}
         >
           {t.hero.title}
@@ -82,11 +82,11 @@ export function Hero() {
           animate={controls}
           className="space-y-4"
         >
-          <p className="text-2xl md:text-3xl font-semibold text-rose-600 dark:text-rose-400 tracking-widest uppercase">
+          <p className="text-2xl md:text-3xl font-semibold text-rose-400 tracking-widest uppercase">
             {t.hero.subtitle}
           </p>
           <div className="h-px w-32 mx-auto bg-gradient-to-r from-transparent via-rose-500 to-transparent opacity-50" />
-          <p className="text-xl md:text-2xl text-rose-800/80 dark:text-rose-200/80 font-medium">
+          <p className="text-xl md:text-2xl text-rose-200/80 font-medium">
             {t.hero.years}
           </p>
         </motion.div>

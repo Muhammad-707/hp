@@ -12,7 +12,7 @@ export function LanguageSwitcher() {
   ];
 
   return (
-    <div className="flex gap-1 bg-white/50 dark:bg-black/20 p-1 rounded-full backdrop-blur-sm border border-rose-100 dark:border-rose-900 shadow-sm">
+    <div className="flex gap-1 bg-black/20 p-1 rounded-full backdrop-blur-sm border border-rose-900 shadow-sm">
       {languages.map((lang) => (
         <Button
           key={lang.code}
@@ -21,7 +21,7 @@ export function LanguageSwitcher() {
           className={`h-7 px-3 text-xs font-semibold rounded-full ${
             language === lang.code 
               ? 'bg-rose-500 text-white shadow-md' 
-              : 'text-rose-700 dark:text-rose-300 hover:text-rose-900 hover:bg-rose-100 dark:hover:bg-rose-900/50'
+              : 'text-rose-300 hover:text-rose-100 hover:bg-rose-900/50'
           }`}
           onClick={() => setLanguage(lang.code)}
         >

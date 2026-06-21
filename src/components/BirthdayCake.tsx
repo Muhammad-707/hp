@@ -57,10 +57,10 @@ export function BirthdayCake() {
           <div className="absolute top-0 left-0 w-full h-32 flex justify-center gap-6 z-20">
             {/* Candle 4 */}
             <div 
-              className="relative w-8 h-24 bg-rose-200 dark:bg-rose-100 rounded-t-md rounded-b-sm border-2 border-rose-300 dark:border-rose-400 cursor-pointer group shadow-sm"
+              className="relative w-8 h-24 bg-rose-100 rounded-t-md rounded-b-sm border-2 border-rose-400 cursor-pointer group shadow-sm"
               onClick={() => blowCandle(0)}
             >
-              <div className="absolute inset-0 flex items-center justify-center text-rose-600 dark:text-rose-800 font-bold text-xl">4</div>
+              <div className="absolute inset-0 flex items-center justify-center text-rose-800 font-bold text-xl">4</div>
               {/* Flame */}
               {candlesLit[0] && (
                 <motion.div 
@@ -78,10 +78,10 @@ export function BirthdayCake() {
 
             {/* Candle 8 */}
             <div 
-              className="relative w-8 h-24 bg-rose-200 dark:bg-rose-100 rounded-t-md rounded-b-sm border-2 border-rose-300 dark:border-rose-400 cursor-pointer group shadow-sm"
+              className="relative w-8 h-24 bg-rose-100 rounded-t-md rounded-b-sm border-2 border-rose-400 cursor-pointer group shadow-sm"
               onClick={() => blowCandle(1)}
             >
-              <div className="absolute inset-0 flex items-center justify-center text-rose-600 dark:text-rose-800 font-bold text-xl">8</div>
+              <div className="absolute inset-0 flex items-center justify-center text-rose-800 font-bold text-xl">8</div>
               {/* Flame */}
               {candlesLit[1] && (
                 <motion.div 
@@ -101,31 +101,31 @@ export function BirthdayCake() {
           {/* Cake Tiers */}
           <div className="absolute bottom-0 w-full flex flex-col items-center">
             {/* Top Tier */}
-            <div className="w-48 h-20 bg-rose-400 dark:bg-rose-600 rounded-t-xl relative shadow-inner border-t-4 border-rose-300 dark:border-rose-500">
+            <div className="w-48 h-20 bg-rose-600 rounded-t-xl relative shadow-inner border-t-4 border-rose-500">
               {/* Icing Drips */}
               <div className="absolute top-0 w-full flex justify-around">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="w-6 h-8 bg-rose-200 dark:bg-rose-300 rounded-b-full" style={{ height: `${20 + Math.random() * 20}px` }} />
+                  <div key={i} className="w-6 h-8 bg-rose-300 rounded-b-full" style={{ height: `${20 + Math.random() * 20}px` }} />
                 ))}
               </div>
             </div>
             {/* Bottom Tier */}
-            <div className="w-64 h-24 bg-rose-500 dark:bg-rose-700 rounded-t-xl relative shadow-lg border-t-4 border-rose-400 dark:border-rose-600">
+            <div className="w-64 h-24 bg-rose-700 rounded-t-xl relative shadow-lg border-t-4 border-rose-600">
               {/* Icing Drips */}
               <div className="absolute top-0 w-full flex justify-around">
                 {[...Array(8)].map((_, i) => (
-                  <div key={i} className="w-6 h-10 bg-rose-300 dark:bg-rose-400 rounded-b-full shadow-sm" style={{ height: `${25 + Math.random() * 25}px` }} />
+                  <div key={i} className="w-6 h-10 bg-rose-400 rounded-b-full shadow-sm" style={{ height: `${25 + Math.random() * 25}px` }} />
                 ))}
               </div>
               {/* Decorative base dots */}
               <div className="absolute bottom-2 w-full flex justify-evenly px-2">
                 {[...Array(12)].map((_, i) => (
-                  <div key={i} className="w-3 h-3 rounded-full bg-rose-200 dark:bg-rose-300" />
+                  <div key={i} className="w-3 h-3 rounded-full bg-rose-300" />
                 ))}
               </div>
             </div>
             {/* Plate */}
-            <div className="w-72 h-4 bg-rose-100 dark:bg-rose-900 rounded-full shadow-xl" />
+            <div className="w-72 h-4 bg-rose-900 rounded-full shadow-xl" />
           </div>
         </div>
 
@@ -133,11 +133,11 @@ export function BirthdayCake() {
           <motion.p 
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ repeat: Infinity, duration: 2 }}
-            className="text-2xl font-semibold text-rose-600 dark:text-rose-400"
+            className="text-2xl font-semibold text-rose-400"
           >
             {candlesLit[0] || candlesLit[1] ? t.cake.makeAWish : "✨"}
           </motion.p>
-          <p className="text-rose-500/80 dark:text-rose-400/80 text-sm">
+          <p className="text-rose-400/80 text-sm">
             {t.cake.blowCandles}
           </p>
         </div>
