@@ -4,6 +4,7 @@ import { PartyPopper } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useLanguage } from '../context/LanguageContext';
 import { Button } from './ui/Button';
+import { playConfettiPopSound } from '../lib/soundEffects';
 
 export function CelebrateButton() {
   const { t } = useLanguage();
@@ -11,6 +12,9 @@ export function CelebrateButton() {
 
   const handleCelebrate = () => {
     if (isExploding) return;
+    
+    playConfettiPopSound();
+    
     setIsExploding(true);
 
     const duration = 3000;

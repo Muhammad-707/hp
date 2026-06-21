@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { playChimeSound } from '../lib/soundEffects';
 
 export function Fireworks() {
   const { ref, isVisible } = useScrollReveal(0.5, true);
@@ -9,6 +10,7 @@ export function Fireworks() {
   useEffect(() => {
     if (isVisible && !triggered.current) {
       triggered.current = true;
+      playChimeSound();
       
       const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;

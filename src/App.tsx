@@ -9,10 +9,12 @@ import { WishesSlider } from './components/WishesSlider';
 import { CelebrateButton } from './components/CelebrateButton';
 import { Footer } from './components/Footer';
 import { LoadingScreen } from './components/LoadingScreen';
+import { MusicPlayer } from './components/MusicPlayer';
+import { cn } from "@/lib/utils";
 
 function App() {
   return (
-    <div className="relative min-h-screen bg-background text-foreground selection:bg-rose-500 selection:text-white overflow-hidden font-sans">
+    <div className={cn('relative', 'bg-background', 'selection:bg-rose-500', 'min-h-screen', 'overflow-hidden', 'font-sans', 'text-foreground', 'selection:text-white')}>
       <LoadingScreen />
       <Header />
       
@@ -28,6 +30,7 @@ function App() {
       </main>
 
       <Footer />
+      <MusicPlayer />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import confetti from 'canvas-confetti';
+import { playCandleBlowSound } from '../lib/soundEffects';
 
 export function BirthdayCake() {
   const { t } = useLanguage();
@@ -9,6 +10,8 @@ export function BirthdayCake() {
 
   const blowCandle = (index: number) => {
     if (!candlesLit[index]) return;
+    
+    playCandleBlowSound();
     
     const newCandles = [...candlesLit];
     newCandles[index] = false;
