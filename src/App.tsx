@@ -17,7 +17,7 @@ function App() {
     <div className={cn('relative', 'bg-background', 'selection:bg-rose-500', 'min-h-screen', 'overflow-hidden', 'font-sans', 'text-foreground', 'selection:text-white')}>
       <LoadingScreen />
       <Header />
-      
+
       <main>
         <Hero />
         <Fireworks />

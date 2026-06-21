@@ -1,4 +1,7 @@
 // All sounds are synthesized on the fly with the Web Audio API — no external audio files needed.
+// These effects are ALWAYS ON by design and are intentionally NOT tied to the
+// background-music mute toggle — they represent interactive feedback (candles,
+// celebrate button, fireworks chime), not ambient music, and should always play.
 
 let sharedCtx: AudioContext | null = null;
 
@@ -18,12 +21,81 @@ function getContext(): AudioContext {
   return sharedCtx;
 }
 
+// Proactively unlock/resume the shared AudioContext on the very first
+// interaction anywhere on the page (click, touch, or key press). This avoids
+// any edge case where the first real sound effect call happens to be blocked
+// because no user gesture has been registered by the browser yet.
+if (typeof window !== 'undefined') {
+  const unlockAudio = () => {
+    getContext();
+    window.removeEventListener('click', unlockAudio);
+    window.removeEventListener('touchstart', unlockAudio);
+    window.removeEventListener('keydown', unlockAudio);
+  };
+  window.addEventListener('click', unlockAudio);
+  window.addEventListener('touchstart', unlockAudio);
+  window.addEventListener('keydown', unlockAudio);
+}
+
+/**
+ * Briefly lowers ("ducks") the background music volume while an interactive
+ * sound effect plays, then smoothly restores it — a standard audio-mixing
+ * trick so effects (candle blow, celebrate fanfare, chime) always cut through
+ * clearly even when the background music is playing loudly.
+ *
+ * This is dynamically imported from MusicPlayer.tsx to avoid a hard
+ * dependency cycle; if the music player isn't mounted yet, this is a no-op.
+ */
+function duckBackgroundMusic(durationMs: number): void {
+  // Dynamic import avoided here on purpose — instead we reach for the
+  // module-level reference exported by MusicPlayer.tsx via a lazy require
+  // pattern that works in both Vite dev and production builds.
+  import('../components/MusicPlayer')
+    .then(({ backgroundMusicElement, BACKGROUND_MUSIC_TARGET_VOLUME }) => {
+      const audio = backgroundMusicElement;
+      if (!audio || audio.paused) return;
+
+      const duckedVolume = BACKGROUND_MUSIC_TARGET_VOLUME * 0.25;
+      const original = audio.volume;
+      const fadeOutMs = 80;
+      const holdMs = durationMs;
+      const fadeInMs = 350;
+
+      const startTime = performance.now();
+      const fromVolume = original;
+
+      const fadeDown = (now: number) => {
+        const progress = Math.min((now - startTime) / fadeOutMs, 1);
+        audio.volume = fromVolume + (duckedVolume - fromVolume) * progress;
+        if (progress < 1) {
+          requestAnimationFrame(fadeDown);
+        } else {
+          setTimeout(() => {
+            const restoreStart = performance.now();
+            const restoreFrom = audio.volume;
+            const fadeUp = (now2: number) => {
+              const p2 = Math.min((now2 - restoreStart) / fadeInMs, 1);
+              audio.volume = restoreFrom + (original - restoreFrom) * p2;
+              if (p2 < 1) requestAnimationFrame(fadeUp);
+            };
+            requestAnimationFrame(fadeUp);
+          }, holdMs);
+        }
+      };
+      requestAnimationFrame(fadeDown);
+    })
+    .catch(() => {
+      // Music player module not available — safe to ignore, effect still plays.
+    });
+}
+
 /**
  * Soft "whoosh / puff" sound for blowing out a candle.
  * Built from filtered white noise with a quick fade-out.
  */
 export function playCandleBlowSound(): void {
   try {
+    duckBackgroundMusic(550);
     const ctx = getContext();
     const duration = 0.5;
 
@@ -64,6 +136,7 @@ export function playCandleBlowSound(): void {
  */
 export function playConfettiPopSound(): void {
   try {
+    duckBackgroundMusic(1700);
     const ctx = getContext();
     const now = ctx.currentTime;
 
@@ -251,6 +324,7 @@ export function playConfettiPopSound(): void {
  */
 export function playChimeSound(): void {
   try {
+    duckBackgroundMusic(1300);
     const ctx = getContext();
     const now = ctx.currentTime;
     const duration = 1.2;

@@ -5,6 +5,17 @@ import { useLanguage } from '../context/LanguageContext';
 import { useSound } from '../context/SoundContext';
 import { cn } from "@/lib/utils";
 
+// ============================================================================
+// MusicPlayer
+// ----------------------------------------------------------------------------
+// This component controls ONLY the background ambient music file located at
+// /public/audio/background-music.mp3. It is intentionally the ONLY thing
+// connected to SoundContext / isSoundEnabled. Interactive sound effects
+// (candles, celebrate button, fireworks chime) live in soundEffects.ts and are
+// ALWAYS ON — they never read isSoundEnabled and are not affected by this
+// toggle in any way.
+// ============================================================================
+
 const tooltips = {
   ru: {
     play: 'Включить музыку',
@@ -22,6 +33,29 @@ const tooltips = {
 
 const TARGET_VOLUME = 0.85;
 
+// Exposed so soundEffects.ts can briefly "duck" (lower) the background music
+// volume while an interactive sound effect plays, so effects are always
+// clearly audible even when the music is loud. See lib/soundEffects.ts.
+export let backgroundMusicElement: HTMLAudioElement | null = null;
+export const BACKGROUND_MUSIC_TARGET_VOLUME = TARGET_VOLUME;
+
+// One-time migration: earlier test versions of this site could leave
+// "sound-enabled" = false in localStorage from manual testing. Music should
+// always start ON by default for every fresh visitor, so we clear any stale
+// "false" value once. This does NOT prevent the user from muting again
+// during their current visit — it only fixes the bad stored default.
+if (typeof window !== 'undefined') {
+  try {
+    const migrationKey = 'sound-enabled-migrated-v2';
+    if (!localStorage.getItem(migrationKey)) {
+      localStorage.setItem('sound-enabled', 'true');
+      localStorage.setItem(migrationKey, '1');
+    }
+  } catch {
+    // localStorage unavailable (e.g. privacy mode) — safe to ignore.
+  }
+}
+
 export function MusicPlayer() {
   const { language } = useLanguage();
   const { isSoundEnabled, setIsSoundEnabled } = useSound();
@@ -30,7 +64,7 @@ export function MusicPlayer() {
 
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const t = tooltips[language] || tooltips.en;
+  const t = tooltips[language as keyof typeof tooltips] || tooltips.en;
 
   const stopFade = () => {
     if (fadeFrameRef.current !== null) {
@@ -63,9 +97,8 @@ export function MusicPlayer() {
     fadeFrameRef.current = requestAnimationFrame(step);
   };
 
-  // Try to autoplay WITH sound immediately on mount. Most browsers will block
-  // this unless the user has already interacted with the site (e.g. came from
-  // a link they clicked), but it costs nothing to try first.
+  // Attempt 1: try to autoplay WITH sound immediately on mount.
+  // Browsers usually block this on a cold visit, but it's free to try.
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !isSoundEnabled) return;
@@ -79,27 +112,35 @@ export function MusicPlayer() {
         fadeTo(TARGET_VOLUME, 1500);
       })
       .catch(() => {
-        // Autoplay-with-sound was blocked by the browser. This is expected —
-        // the fallback effect below will start playback on the very next
-        // user interaction of any kind (click, scroll, key, touch, mouse move).
+        // Blocked by browser autoplay policy — expected. The fallback
+        // listener below will catch the very next user interaction.
       });
 
     return () => stopFade();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Fallback: if the autoplay-with-sound attempt above was blocked, start
-  // playback on the very first interaction of ANY kind — including scroll
-  // and mouse movement, not just clicks — so it kicks in as early as possible.
+  // Attempt 2 (fallback): start playback on the very first interaction of
+  // ANY kind (click, touch, key, scroll, mouse move) so it kicks in as
+  // early as possible if attempt 1 was blocked.
   useEffect(() => {
     let triggered = false;
 
-    const startPlayback = () => {
+    const removeListeners = () => {
+      window.removeEventListener('click', startPlayback);
+      window.removeEventListener('touchstart', startPlayback);
+      window.removeEventListener('keydown', startPlayback);
+      window.removeEventListener('scroll', startPlayback);
+      window.removeEventListener('mousemove', startPlayback);
+    };
+
+    function startPlayback() {
       if (triggered) return;
       const audio = audioRef.current;
       if (!audio || !isSoundEnabled) return;
+
       if (!audio.paused) {
-        // Already playing (the immediate autoplay attempt succeeded) — nothing to do.
+        // Attempt 1 already succeeded — nothing more to do.
         triggered = true;
         removeListeners();
         return;
@@ -115,15 +156,7 @@ export function MusicPlayer() {
         .catch((err) => {
           console.warn('Could not start background music:', err);
         });
-    };
-
-    const removeListeners = () => {
-      window.removeEventListener('click', startPlayback);
-      window.removeEventListener('touchstart', startPlayback);
-      window.removeEventListener('keydown', startPlayback);
-      window.removeEventListener('scroll', startPlayback);
-      window.removeEventListener('mousemove', startPlayback);
-    };
+    }
 
     window.addEventListener('click', startPlayback);
     window.addEventListener('touchstart', startPlayback);
@@ -132,12 +165,10 @@ export function MusicPlayer() {
     window.addEventListener('mousemove', startPlayback);
 
     return removeListeners;
-    // Only set up once on mount; isSoundEnabled is read fresh via ref-safe closure check above.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Keep the actual <audio> element in sync whenever the user toggles sound
-  // (covers both the floating button and any other place that might change it).
+  // Keep the <audio> element in sync with the toggle button / SoundContext.
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -159,6 +190,15 @@ export function MusicPlayer() {
       });
     }
   }, [isSoundEnabled]);
+
+  // Keep the module-level reference in sync so soundEffects.ts can duck this
+  // element's volume while a sound effect plays.
+  useEffect(() => {
+    backgroundMusicElement = audioRef.current;
+    return () => {
+      backgroundMusicElement = null;
+    };
+  }, []);
 
   const handleToggle = () => {
     setIsSoundEnabled(!isSoundEnabled);

@@ -2,6 +2,15 @@ import { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
+// ============================================================================
+// SoundContext
+// ----------------------------------------------------------------------------
+// This context controls ONLY the background ambient music toggle (the
+// floating speaker button rendered by MusicPlayer.tsx). It is NOT read by
+// any interactive sound effect (candles, celebrate button, fireworks chime)
+// — those live in soundEffects.ts and are always-on by design.
+// ============================================================================
+
 type SoundContextType = {
   isSoundEnabled: boolean;
   setIsSoundEnabled: (enabled: boolean) => void;
@@ -10,8 +19,8 @@ type SoundContextType = {
 const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 export function SoundProvider({ children }: { children: ReactNode }) {
-  // Sound starts enabled by default so that when they first interact, they get the full audio experience.
-  // The autoplay policy is handled by starting the audio element muted, and unmuting it on first interaction.
+  // Sound starts enabled by default so that on first interaction, the user
+  // gets the full audio experience right away.
   const [isSoundEnabled, setIsSoundEnabled] = useLocalStorage<boolean>('sound-enabled', true);
 
   return (

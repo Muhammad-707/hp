@@ -5,6 +5,12 @@ import confetti from 'canvas-confetti';
 import { useLanguage } from '../context/LanguageContext';
 import { Button } from './ui/Button';
 import { playConfettiPopSound } from '../lib/soundEffects';
+import { cn } from "@/lib/utils";
+
+// NOTE: playConfettiPopSound() is called unconditionally below — it is an
+// always-on interactive sound effect and is intentionally NOT gated by
+// SoundContext / isSoundEnabled (that toggle only controls the background
+// music in MusicPlayer.tsx).
 
 export function CelebrateButton() {
   const { t } = useLanguage();
@@ -12,9 +18,9 @@ export function CelebrateButton() {
 
   const handleCelebrate = () => {
     if (isExploding) return;
-    
+
     playConfettiPopSound();
-    
+
     setIsExploding(true);
 
     const duration = 3000;
@@ -47,7 +53,7 @@ export function CelebrateButton() {
   };
 
   return (
-    <section className="py-32 flex justify-center items-center relative overflow-hidden">
+    <section className={cn('relative', 'flex', 'justify-center', 'items-center', 'py-32', 'overflow-hidden')}>
       <motion.div
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -60,23 +66,23 @@ export function CelebrateButton() {
               animate={{ opacity: 0, scale: 2 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1 }}
-              className="absolute inset-0 bg-rose-500 rounded-full blur-xl z-0"
+              className={cn('z-0', 'absolute', 'inset-0', 'bg-rose-500', 'blur-xl', 'rounded-full')}
             />
           )}
         </AnimatePresence>
-        
+
         <Button
           onClick={handleCelebrate}
           size="lg"
-          className="relative z-10 h-24 px-12 text-2xl md:text-3xl font-black rounded-full bg-gradient-to-r from-rose-500 via-rose-600 to-red-500 hover:from-rose-600 hover:via-rose-700 hover:to-red-600 text-white shadow-[0_10px_40px_rgba(255,45,120,0.5)] hover:shadow-[0_10px_60px_rgba(255,45,120,0.8)] border-4 border-rose-900 transition-all overflow-hidden group"
+          className={cn('group', 'z-10', 'relative', 'bg-gradient-to-r', 'from-rose-500', 'hover:from-rose-600', 'via-rose-600', 'hover:via-rose-700', 'to-red-500', 'hover:to-red-600', 'shadow-[0_10px_40px_rgba(255,45,120,0.5)]', 'hover:shadow-[0_10px_60px_rgba(255,45,120,0.8)]', 'px-12', 'border-4', 'border-rose-900', 'rounded-full', 'h-24', 'overflow-hidden', 'font-black', 'text-white', 'text-2xl', 'md:text-3xl', 'transition-all')}
         >
           {/* Shimmer effect */}
-          <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12" />
-          
-          <span className="flex items-center gap-4 drop-shadow-md">
-            <PartyPopper className="w-8 h-8 md:w-10 md:h-10" />
+          <div className={cn('absolute', 'inset-0', 'bg-gradient-to-r', 'from-transparent', 'via-white/30', 'to-transparent', 'skew-x-12', '-translate-x-full', 'group-hover:animate-[shimmer_1.5s_infinite]')} />
+
+          <span className={cn('flex', 'items-center', 'gap-4', 'drop-shadow-md')}>
+            <PartyPopper className={cn('w-8', 'md:w-10', 'h-8', 'md:h-10')} />
             {t.celebrate.buttonText}
-            <PartyPopper className="w-8 h-8 md:w-10 md:h-10" />
+            <PartyPopper className={cn('w-8', 'md:w-10', 'h-8', 'md:h-10')} />
           </span>
         </Button>
       </motion.div>
