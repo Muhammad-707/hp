@@ -8,10 +8,12 @@ import { PhotoGallery } from './components/PhotoGallery';
 import { WishesSlider } from './components/WishesSlider';
 import { CelebrateButton } from './components/CelebrateButton';
 import { Footer } from './components/Footer';
+import { LoadingScreen } from './components/LoadingScreen';
 
 function App() {
   return (
     <div className="relative min-h-screen bg-background text-foreground selection:bg-rose-500 selection:text-white overflow-hidden font-sans">
+      <LoadingScreen />
       <Header />
       
       <main>
