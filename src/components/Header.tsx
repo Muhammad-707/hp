@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { ThemeToggle } from './ThemeToggle';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { cn } from "@/lib/utils";
 
@@ -15,7 +14,6 @@ export function Header() {
         <div></div>
         <div className={cn('flex', 'items-center', 'gap-4')}>
           <LanguageSwitcher />
-          {/* <ThemeToggle /> */}
         </div>
       </div>
     </motion.header>
