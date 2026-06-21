@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme {
+  --color-rose-100: #FFE4ED;
+  --color-rose-200: #FFC9DA;
+  --color-rose-300: #FF9EBE;
+  --color-rose-400: #FF6699;
+  --color-rose-500: #FF2D78;
+  --color-rose-600: #E0115F;
+  --color-rose-700: #C70039;
+  --color-rose-800: #99002B;
+  --color-rose-900: #66001D;
+  
+  --color-background: var(--bg-color);
+  --color-foreground: var(--fg-color);
+  --color-primary: var(--primary-color);
+  --color-primary-foreground: var(--primary-fg-color);
+  --color-secondary: var(--secondary-color);
+  --color-secondary-foreground: var(--secondary-fg-color);
+  --color-accent: var(--accent-color);
+  --color-accent-foreground: var(--accent-fg-color);
+  --color-card: var(--card-color);
+  --color-card-foreground: var(--card-fg-color);
+  
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer base {
+  :root {
+    --bg-color: #FFF0F5;
+    --fg-color: #3D0C26;
+    
+    --primary-color: #FF2D78;
+    --primary-fg-color: #ffffff;
+    
+    --secondary-color: #E0115F;
+    --secondary-fg-color: #ffffff;
+    
+    --accent-color: #FFC9DA;
+    --accent-fg-color: #66001D;
+    
+    --card-color: #ffffff;
+    --card-fg-color: #3D0C26;
+    
+    --radius: 1rem;
+    
+    --gradient-light: linear-gradient(135deg, #FFF0F5 0%, #FFE4ED 100%);
+  }
+  
+  .dark {
+    --bg-color: #1A0510;
+    --fg-color: #FFE4ED;
+    
+    --primary-color: #FF2D78;
+    --primary-fg-color: #ffffff;
+    
+    --secondary-color: #C70039;
+    --secondary-fg-color: #ffffff;
+    
+    --accent-color: #66001D;
+    --accent-fg-color: #FFC9DA;
+    
+    --card-color: #2B0A1F;
+    --card-fg-color: #FFE4ED;
+    
+    --gradient-dark: linear-gradient(135deg, #1A0510 0%, #2B0A1F 50%, #3D0C26 100%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-rose-200 dark:border-rose-800;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background: var(--gradient-light);
+    min-height: 100vh;
+  }
+  
+  .dark body {
+    background: var(--gradient-dark);
+  }
+}
